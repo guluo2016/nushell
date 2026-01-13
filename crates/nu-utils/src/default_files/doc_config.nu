@@ -75,6 +75,12 @@ $env.config.history.path = "~/custom/my-history.txt"
 # If set to a directory, the appropriate file name (e.g., history.txt) is used.
 # If set to a filename only, the file will be stored in $nu.default-config-dir.
 
+# history.ignore_space (bool): Whether commands that start with a space are saved to history.
+# true: Commands starting with a space will NOT be saved to history.
+# false: All commands will be saved to history, including those starting with a space.
+# Default: true
+$env.config.history.ignore_space = true
+
 # ----------------------
 # Miscellaneous Settings
 # ----------------------
