@@ -1271,7 +1271,11 @@ fn update_line_editor_history(
     };
     let line_editor = line_editor
         .with_history_session_id(history_session_id)
-        .with_history_exclusion_prefix(Some(" ".into()))
+        .with_history_exclusion_prefix(if history.ignore_space {
+            Some(" ".into())
+        } else {
+            None
+        })
         .with_history(history);
 
     store_history_id_in_engine(engine_state, &line_editor);
