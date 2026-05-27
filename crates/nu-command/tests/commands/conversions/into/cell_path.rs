@@ -1,13 +1,14 @@
-use nu_protocol::ShellError;
+use nu_protocol::{ShellError, Value};
 use nu_test_support::prelude::*;
 
 #[test]
 fn into_cell_path_with_negative_number_errors_out() -> Result {
-    let err = test()
-        .run("(-2) | into cell-path")
-        .expect_shell_error()?;
+    let val: Value = test().run("(-2) | into cell-path")?;
+    let Value::Error { error, .. } = val else {
+        panic!("expected Value::Error, got {val:?}");
+    };
 
-    match err {
+    match *error {
         ShellError::CantConvert {
             to_type, from_type, ..
         } => {
