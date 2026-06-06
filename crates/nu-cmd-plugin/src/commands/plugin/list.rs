@@ -24,8 +24,19 @@ impl Command for PluginList {
                         ("pid".into(), Type::Int),
                         ("filename".into(), Type::String),
                         ("shell".into(), Type::String),
-                        ("commands".into(), Type::List(Type::String.into())),
+                        (
+                            "commands".into(),
+                            Type::Table(
+                                [
+                                    ("name".into(), Type::String),
+                                    ("description".into(), Type::String),
+                                ]
+                                .to_vec()
+                                .into(),
+                            ),
+                        ),
                     ]
+                    .to_vec()
                     .into(),
                 ),
             )
@@ -99,7 +110,10 @@ See also: `plugin use`
                         Value::test_string("/opt/nu/plugins/nu_plugin_inc")
                     },
                     "shell" => Value::test_nothing(),
-                    "commands" => Value::test_list(vec![Value::test_string("inc")]),
+                    "commands" => Value::test_list(vec![Value::test_record(record! {
+                        "name" => Value::test_string("inc"),
+                        "description" => Value::test_string("Increment a value or version. Optionally use the column of a table."),
+                    })]),
                 })])),
             },
             Example {
